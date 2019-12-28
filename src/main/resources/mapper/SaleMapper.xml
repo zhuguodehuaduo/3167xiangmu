@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lry.dao.SaleDao">
+    <insert id="insert">
+       insert into sale(price,quantity,totalprice,saledate,userid,productid)values(#{price},#{quantity},#{totalprice},(select date(now())),#{userid.id},#{productid.id})
+    </insert>
+    <select id="selectAllSale" resultMap="salemap">
+     select sale.id,sale.price,sale.quantity,sale.totalprice,sale.saledate,users.username,product.productname,users.realname from sale,product,users
+      where users.id=sale.userid and product.id=sale.productid
+      <if test="orderby==0">
+          order by saleDate
+      </if>
+        <if test="orderby==1">
+            order by totalprice
+        </if>
+    </select>
+    <resultMap id="salemap" type="com.lry.po.sale">
+        <id property="id" column="id"></id>
+        <result property="price" column="price"></result>
+        <result property="quantity" column="quantity"></result>
+        <result property="totalprice" column="totalprice"></result>
+        <result property="saleDate" column="saledate"></result>
+        <association property="productid" javaType="com.lry.po.product">
+            <id property="id" column="id"></id>
+            <result property="quantity" column="quantity"></result>
+            <result property="productname" column="productname"></result>
+        </association>
+        <association property="userid" javaType="com.lry.po.users">
+            <id property="id" column="id"></id>
+            <id property="username" column="username"></id>
+            <result property="password" column="password"></result>
+            <result property="realname" column="realname"></result>
+        </association>
+    </resultMap>
+</mapper>
