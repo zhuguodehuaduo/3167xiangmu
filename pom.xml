@@ -32,7 +32,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
-      <version>4.0.0.RELEASE</version>
+      <version>5.3.18</version>
     </dependency>
     <!-- Spring 核心包 spring-context -->
     <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
